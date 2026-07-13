@@ -63,8 +63,15 @@
         font-weight: 600;
         color: #111318;
       }
+      .devices {
+        margin-top: 22px;
+        font-family: Menlo, monospace;
+        font-size: 18px;
+        letter-spacing: 0.06em;
+        color: #6b7280;
+      }
       .tickers {
-        margin-top: 56px;
+        margin-top: 44px;
         display: flex;
         gap: 14px;
       }
@@ -83,13 +90,19 @@
       .chip .down {
         color: #dc2626;
       }
-      .watch {
+      .watch-back {
         position: absolute;
-        right: 88px;
-        top: 45px;
-        width: 630px;
-        height: 630px;
+        right: 425px;
+        top: 110px;
+        height: 440px;
         z-index: 1;
+      }
+      .watch-front {
+        position: absolute;
+        right: 30px;
+        top: 170px;
+        height: 540px;
+        z-index: 2;
       }
     </style>
   </head>
@@ -105,15 +118,20 @@
       <circle cx="690" cy="597" r="8" fill="#3aa3ff" />
       <circle cx="690" cy="597" r="16" fill="#3aa3ff" opacity="0.18" />
     </svg>
-    <img class="watch" src="../docs/store-cover.png" alt="" />
+    <img class="watch-back" src="../docs/screenshots/brent.png" alt="" />
+    <img class="watch-front" src="../docs/screenshots/nasdaq100.png" alt="" />
     <div class="content">
       <div class="eyebrow">GARMIN CONNECT IQ &middot; WIDGET</div>
       <div class="title">
         ONE<br />TICKER<br />STOCK<span class="dim">_</span>
       </div>
       <div class="tagline">
-        <b>One ticker. One glance.</b> Live price and intraday chart on your
-        watch.
+        <b>One ticker. One glance.</b> Live price and an intraday
+        chart&nbsp;&mdash; line or candles.
+      </div>
+      <div class="devices">
+        Forerunner &middot; tactix &middot; epix &middot; Venu &middot;
+        v&iacute;voactive
       </div>
       <div class="tickers">
         <div class="chip">AAPL <span class="down">-0.28%</span></div>
