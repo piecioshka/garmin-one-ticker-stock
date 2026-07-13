@@ -57,21 +57,22 @@ version.
 
 ## Form metadata
 
-| Field                  | Value                                                   |
-| ---------------------- | ------------------------------------------------------- |
-| Type                   | Widget                                                  |
-| Category               | Finance (fall back to Lifestyle if absent)              |
-| Supported devices      | Forerunner 945 (derived from the manifest in the `.iq`) |
-| Permissions            | Communications — fetching quotes through the phone      |
-| Source code URL        | https://github.com/piecioshka/garmin-one-ticker-stock   |
-| Privacy: personal data | The app does not collect or send any personal data      |
+| Field                  | Value                                                                                                                                             |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Type                   | Widget                                                                                                                                            |
+| Category               | Finance (fall back to Lifestyle if absent)                                                                                                        |
+| Supported devices      | Forerunner 945, tactix 7 (incl. AMOLED / epix Pro Gen 2), Venu 2/2S/2 Plus/3/3S/4, vívoactive 3/4/4S/5/6 (derived from the manifest in the `.iq`) |
+| Permissions            | Communications — fetching quotes through the phone                                                                                                |
+| Source code URL        | https://github.com/piecioshka/garmin-one-ticker-stock                                                                                             |
+| Privacy: personal data | The app does not collect or send any personal data                                                                                                |
 
 ## Artwork
 
 - Hero Image (1440×720, optional): `docs/store-hero.png` (source:
   `docs/store-hero.html`, rendered with headless Chromium at 1440×720)
 - Cover Image (500×500, required): `docs/store-cover.png`
-- Screenshots (at least 1, each < 150 kB): `docs/screenshots/apple.png`
-  (with the dashed session-break line), `bitcoin.png`, `brent.png`
-  (candlestick mode), `nasdaq100.png` (candlestick mode), `xtb.png`
+- Screenshots (at least 1, each < 150 kB), each taken on a different watch
+  model: `docs/screenshots/apple.png` (Forerunner 945), `bitcoin.png`
+  (epix Pro Gen 2), `brent.png` (tactix 7, candlestick mode),
+  `nasdaq100.png` (Venu 3, candlestick mode), `xtb.png` (vívoactive 5)
 - The app icon ships inside the `.iq` package (launcher icon from resources)

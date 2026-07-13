@@ -2,18 +2,22 @@
 
 [![Connect IQ Store](https://img.shields.io/badge/Connect_IQ_Store-One_Ticker_Stock-007CC3?logo=garmin)](https://apps.garmin.com/en-US/apps/f4445669-50fa-4d35-a988-ee1a65721bfb)
 
-📊 Connect IQ widget for the Garmin Forerunner 945 that shows the current
-price and an intraday chart of any stock ticker you configure in the app
-settings.
+📊 Connect IQ widget for Garmin watches — Forerunner 945, tactix 7
+(incl. AMOLED / epix Pro Gen 2), Venu 2/3/4 and vívoactive 3/4/5/6 — that
+shows the current price and an intraday chart of any stock ticker you
+configure in the app settings. The layout scales to every screen size.
 
 Available as **One Ticker Stock** in the official
 [Connect IQ Store](https://apps.garmin.com/en-US/apps/f4445669-50fa-4d35-a988-ee1a65721bfb).
 
 ## Screenshots 📸
 
+Each screenshot comes from a different watch model:
+
 | Apple                                              | XTB                                              | Brent oil                                          | NASDAQ-100                                             | Bitcoin                                              |
 | -------------------------------------------------- | ------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- |
-| `AAPL`                                             | `XTB.WA`                                         | `BZ=F` (candlestick)                               | `^NDX` (candlestick)                                   | `BTC-USD`                                            |
+| `AAPL`                                             | `XTB.WA`                                         | `BZ=F` (candlestick)                               | `NQ=F` (candlestick)                                   | `BTC-USD`                                            |
+| Forerunner 945                                     | vívoactive 5                                     | tactix 7                                           | Venu 3                                                 | epix Pro (Gen 2)                                     |
 | <img src="docs/screenshots/apple.png" width="150"> | <img src="docs/screenshots/xtb.png" width="150"> | <img src="docs/screenshots/brent.png" width="150"> | <img src="docs/screenshots/nasdaq100.png" width="150"> | <img src="docs/screenshots/bitcoin.png" width="150"> |
 
 ## Features 🚀
@@ -48,7 +52,8 @@ watch must be paired and the phone online.
 ## Requirements 🧰
 
 - Connect IQ SDK (tested with 9.2.0) installed via the official SDK Manager
-- Device files for `fr945` downloaded in the SDK Manager (Devices tab)
+- Device files for the target devices (e.g. `fr945`, `fenix7x`, `venu3`)
+  downloaded in the SDK Manager (Devices tab)
 - A developer key (`developer_key.der`)
 
 > [!IMPORTANT]
