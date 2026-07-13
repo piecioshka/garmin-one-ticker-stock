@@ -43,11 +43,13 @@ Each screenshot comes from a different watch model:
 Unofficial Yahoo Finance chart API (no API key required):
 
 ```
-GET https://query1.finance.yahoo.com/v8/finance/chart/{TICKER}?range=1d&interval=15m
+GET https://query1.finance.yahoo.com/v8/finance/chart/{TICKER}?period1={now-24h}&period2={now}&interval=15m
 ```
 
-Requests go through the Garmin Connect Mobile app on your phone, so the
-watch must be paired and the phone online.
+The trailing 24 h (default) and 48 h chart windows query a `period1`/
+`period2` timestamp range; the "last session" window uses `range=1d`
+instead. Requests go through the Garmin Connect Mobile app on your phone,
+so the watch must be paired and the phone online.
 
 ## Requirements 🧰
 
