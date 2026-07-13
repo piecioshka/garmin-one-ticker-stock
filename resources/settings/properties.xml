@@ -1,3 +1,5 @@
 <properties>
     <property id="ticker" type="string">BZ=F</property>
+    <property id="chartWindow" type="number">1</property>
+    <property id="chartType" type="number">0</property>
 </properties>

@@ -1,4 +1,12 @@
 <strings>
     <string id="AppName">One Ticker Stock</string>
     <string id="TickerTitle">Ticker symbol</string>
+    <string id="TickerPrompt">Quotes come from Yahoo Finance. Use a Yahoo Finance symbol, e.g. AAPL, BTC-USD, ^NDX, BZ=F or XTB.WA.</string>
+    <string id="ChartWindowTitle">Chart window</string>
+    <string id="ChartWindowSession">Last session</string>
+    <string id="ChartWindow24h">Last 24 hours</string>
+    <string id="ChartWindow48h">Last 48 hours</string>
+    <string id="ChartTypeTitle">Chart type</string>
+    <string id="ChartTypeLine">Line</string>
+    <string id="ChartTypeCandles">Candles</string>
 </strings>

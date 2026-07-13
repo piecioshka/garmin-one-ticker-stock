@@ -12,8 +12,8 @@ class StocksView extends Ui.View {
     const SYMBOL_Y = 10;
     const NAME_Y = 34;
     const NAME_MAX_WIDTH = 180;
-    const PRICE_Y = 54;
-    const CHANGE_Y = 100;
+    const PRICE_Y = 48;
+    const CHANGE_Y = 94;
     const CHART_X = 30;
     const CHART_Y = 126;
     const CHART_WIDTH = 180;
@@ -48,7 +48,9 @@ class StocksView extends Ui.View {
         }
         mLoading = true;
         mWiderRangeTried = false;
-        YahooClient.requestChart(currentTicker(), method(:onQuote));
+        YahooClient.requestChart(currentTicker(),
+            numberProperty("chartWindow", YahooClient.WINDOW_24H),
+            method(:onQuote));
         Ui.requestUpdate();
     }
 
@@ -60,13 +62,22 @@ class StocksView extends Ui.View {
         return "AAPL";
     }
 
+    function numberProperty(key, fallback) {
+        var value = App.Properties.getValue(key);
+        if (value instanceof Lang.Number) {
+            return value;
+        }
+        return fallback;
+    }
+
     function onQuote(responseCode, data) {
         mLoading = false;
         if (responseCode == 200) {
             var parsed = YahooClient.parseChart(data);
             if (YahooClient.needsWiderRange(parsed) && !mWiderRangeTried) {
-                // no candles for the current UTC day (typical for crypto):
-                // retry once with a wider window before giving up on a chart
+                // no trades in the last 24 hours (stock exchanges on
+                // weekends, before the session): retry once with the last
+                // two trading days before giving up on a chart
                 mWiderRangeTried = true;
                 mLoading = true;
                 YahooClient.requestChartRange(currentTicker(), "2d",
@@ -79,7 +90,7 @@ class StocksView extends Ui.View {
                 mError = null;
                 App.Storage.setValue("quote", parsed);
             } else {
-                mError = "Bad data";
+                mError = "Bad data: " + currentTicker();
             }
         } else {
             mError = errorLabel(responseCode);
@@ -162,7 +173,15 @@ class StocksView extends Ui.View {
             Gfx.TEXT_JUSTIFY_CENTER);
     }
 
+    // Values of the chartType setting (resources/settings/settings.xml).
+    const CHART_TYPE_LINE = 0;
+    const CHART_TYPE_CANDLES = 1;
+
     function drawChart(dc) {
+        if (numberProperty("chartType", CHART_TYPE_LINE) == CHART_TYPE_CANDLES
+            && drawCandleChart(dc)) {
+            return;
+        }
         var points = ChartRenderer.scalePoints(mData.get("closes"), CHART_X, CHART_Y, CHART_WIDTH, CHART_HEIGHT);
         if (points.size() < 2) {
             dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_TRANSPARENT);
@@ -170,7 +189,25 @@ class StocksView extends Ui.View {
                 "No chart data", Gfx.TEXT_JUSTIFY_CENTER);
             return;
         }
+        // "breaks" is absent in quotes cached by older versions
+        ChartRenderer.drawBreaks(dc, points, mData.get("breaks"),
+            CHART_Y, CHART_HEIGHT, Gfx.COLOR_DK_GRAY);
         ChartRenderer.draw(dc, points, Gfx.COLOR_BLUE);
+    }
+
+    // False when OHLC series are unavailable (e.g. a quote cached by an
+    // older version) — the caller then falls back to the line chart.
+    function drawCandleChart(dc) {
+        var candles = ChartRenderer.scaleCandles(mData.get("opens"),
+            mData.get("highs"), mData.get("lows"), mData.get("closes"),
+            CHART_X, CHART_Y, CHART_WIDTH, CHART_HEIGHT);
+        if (candles.size() < 2) {
+            return false;
+        }
+        ChartRenderer.drawBreaks(dc, candles, mData.get("breaks"),
+            CHART_Y, CHART_HEIGHT, Gfx.COLOR_DK_GRAY);
+        ChartRenderer.drawCandles(dc, candles, Gfx.COLOR_GREEN, Gfx.COLOR_RED);
+        return true;
     }
 
     // Update time in gray plus the session status in dark orange,

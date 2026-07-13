@@ -8,15 +8,19 @@ settings.
 
 | Apple                                              | XTB                                              | Brent oil                                          | NASDAQ-100                                             | Bitcoin                                              |
 | -------------------------------------------------- | ------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------------ | ---------------------------------------------------- |
-| `AAPL`                                             | `XTB.WA`                                         | `BZ=F`                                             | `^NDX`                                                 | `BTC-USD`                                            |
+| `AAPL`                                             | `XTB.WA`                                         | `BZ=F` (candlestick)                               | `^NDX` (candlestick)                                   | `BTC-USD`                                            |
 | <img src="docs/screenshots/apple.png" width="150"> | <img src="docs/screenshots/xtb.png" width="150"> | <img src="docs/screenshots/brent.png" width="150"> | <img src="docs/screenshots/nasdaq100.png" width="150"> | <img src="docs/screenshots/bitcoin.png" width="150"> |
 
 ## Features 🚀
 
 - 💰 Current price with change vs. previous close (green/red)
-- 📈 Intraday line chart (1 day, 15-minute interval); when Yahoo has no
-  candles for the current UTC day yet (typical for crypto), the widget
-  falls back to a 2-day window
+- 📈 Price chart of 15-minute candles with a configurable window: last 24
+  hours (default), last 48 hours, or the last trading session; when the
+  window is empty (stock exchanges on weekends, before the session), the
+  widget falls back to the last two trading days
+- 🕯️ Configurable chart type: line (default) or candlestick
+- ✂️ Dashed vertical line marking the break between trading sessions when
+  the chart spans more than one (weekends, overnight gaps)
 - 🕒 Instrument name and session status (opens/closes/closed) in the
   watch-local time
 - 🌍 Any instrument known to Yahoo Finance: stocks (`AAPL`), crypto

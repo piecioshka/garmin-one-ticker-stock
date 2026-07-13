@@ -1,5 +1,19 @@
 <settings>
-    <setting propertyKey="@Properties.ticker" title="@Strings.TickerTitle">
+    <setting propertyKey="@Properties.ticker" title="@Strings.TickerTitle"
+        prompt="@Strings.TickerPrompt">
         <settingConfig type="alphaNumeric" maxLength="12"/>
+    </setting>
+    <setting propertyKey="@Properties.chartWindow" title="@Strings.ChartWindowTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.ChartWindowSession</listEntry>
+            <listEntry value="1">@Strings.ChartWindow24h</listEntry>
+            <listEntry value="2">@Strings.ChartWindow48h</listEntry>
+        </settingConfig>
+    </setting>
+    <setting propertyKey="@Properties.chartType" title="@Strings.ChartTypeTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.ChartTypeLine</listEntry>
+            <listEntry value="1">@Strings.ChartTypeCandles</listEntry>
+        </settingConfig>
     </setting>
 </settings>

@@ -14,6 +14,7 @@ function testParseChartHappyPath(logger) {
                         "regular" => {"start" => 1000, "end" => 2000}
                     }
                 },
+                "timestamp" => [0, 900, 1800, 100000],
                 "indicators" => {
                     "quote" => [{
                         "close" => [121.0, null, 122.5, 123.45]
@@ -33,6 +34,89 @@ function testParseChartHappyPath(logger) {
     Test.assertEqual(121.0, closes[0]);
     Test.assertEqual(1000, parsed.get("sessionStart"));
     Test.assertEqual(2000, parsed.get("sessionEnd"));
+    // kept candles at 0, 1800, 100000: only the 1800 -> 100000 jump is a
+    // session break, and its index points into the filtered closes array
+    var breaks = parsed.get("breaks");
+    Test.assertEqual(1, breaks.size());
+    Test.assertEqual(2, breaks[0]);
+    return true;
+}
+
+(:test)
+function testParseChartNoTimestampsMeansNoBreaks(logger) {
+    var data = {
+        "chart" => {
+            "result" => [{
+                "meta" => {
+                    "symbol" => "AAPL",
+                    "regularMarketPrice" => 123.45
+                },
+                "indicators" => {"quote" => [{"close" => [1.0, 2.0]}]}
+            }]
+        }
+    };
+    var parsed = YahooClient.parseChart(data);
+    Test.assert(parsed != null);
+    Test.assertEqual(0, parsed.get("breaks").size());
+    return true;
+}
+
+(:test)
+function testWindowParams(logger) {
+    var session = YahooClient.windowParams(YahooClient.WINDOW_SESSION, 1000000);
+    Test.assertEqual("1d", session.get("range"));
+    var day = YahooClient.windowParams(YahooClient.WINDOW_24H, 1000000);
+    Test.assertEqual(1000000 - 86400, day.get("period1"));
+    Test.assertEqual(1000000, day.get("period2"));
+    var twoDays = YahooClient.windowParams(YahooClient.WINDOW_48H, 1000000);
+    Test.assertEqual(1000000 - 172800, twoDays.get("period1"));
+    // unknown or missing mode falls back to the 24h window
+    Test.assertEqual(1000000 - 86400,
+        YahooClient.windowParams(null, 1000000).get("period1"));
+    return true;
+}
+
+(:test)
+function testParseChartAlignsOhlcWithFilteredCloses(logger) {
+    var data = {
+        "chart" => {
+            "result" => [{
+                "meta" => {
+                    "symbol" => "AAPL",
+                    "regularMarketPrice" => 123.45
+                },
+                "indicators" => {
+                    "quote" => [{
+                        "close" => [10.0, null, 30.0],
+                        "open" => [9.0, 19.0, 29.0],
+                        "high" => [11.0, 21.0, null],
+                        "low" => [8.0, 18.0, 28.0]
+                    }]
+                }
+            }]
+        }
+    };
+    var parsed = YahooClient.parseChart(data);
+    Test.assert(parsed != null);
+    // the null close drops the whole candle from every series
+    Test.assertEqual(2, parsed.get("opens").size());
+    Test.assertEqual(9.0, parsed.get("opens")[0]);
+    Test.assertEqual(29.0, parsed.get("opens")[1]);
+    // a hole in one OHLC array falls back to that candle's close
+    Test.assertEqual(30.0, parsed.get("highs")[1]);
+    Test.assertEqual(28.0, parsed.get("lows")[1]);
+    return true;
+}
+
+(:test)
+function testSessionBreaksIgnoresSmallGaps(logger) {
+    // 15-minute candles with up to 3 candles missing (45 min) are still one
+    // session; anything wider marks the next candle as a new session
+    Test.assertEqual(0, YahooClient.sessionBreaks([0, 900, 3600]).size());
+    var breaks = YahooClient.sessionBreaks([0, 900, 7200, 8100]);
+    Test.assertEqual(1, breaks.size());
+    Test.assertEqual(2, breaks[0]);
+    Test.assertEqual(0, YahooClient.sessionBreaks([]).size());
     return true;
 }
 
