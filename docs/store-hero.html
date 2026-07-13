@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1440px;
+        height: 720px;
+        overflow: hidden;
+      }
+      body {
+        background: #ffffff;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        color: #111318;
+        position: relative;
+      }
+      .spark {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 1440px;
+        height: 720px;
+        z-index: 0;
+      }
+      .content {
+        position: absolute;
+        left: 96px;
+        top: 130px;
+        width: 700px;
+        z-index: 2;
+      }
+      .eyebrow {
+        font-family: Menlo, monospace;
+        font-size: 17px;
+        letter-spacing: 0.32em;
+        color: #6b7280;
+        margin-bottom: 34px;
+      }
+      .title {
+        font-family: Menlo, monospace;
+        font-size: 84px;
+        font-weight: 700;
+        line-height: 1.04;
+        letter-spacing: -0.02em;
+      }
+      .title .dim {
+        color: #b7bcc6;
+      }
+      .tagline {
+        margin-top: 30px;
+        font-size: 30px;
+        font-weight: 400;
+        color: #3c4250;
+        letter-spacing: 0.01em;
+      }
+      .tagline b {
+        font-weight: 600;
+        color: #111318;
+      }
+      .tickers {
+        margin-top: 56px;
+        display: flex;
+        gap: 14px;
+      }
+      .chip {
+        font-family: Menlo, monospace;
+        font-size: 19px;
+        padding: 10px 16px;
+        border: 1.5px solid #d6dae2;
+        border-radius: 8px;
+        color: #3c4250;
+        background: #ffffff;
+      }
+      .chip .up {
+        color: #16a34a;
+      }
+      .chip .down {
+        color: #dc2626;
+      }
+      .watch {
+        position: absolute;
+        right: 88px;
+        top: 45px;
+        width: 630px;
+        height: 630px;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <svg class="spark" viewBox="0 0 1440 720" fill="none">
+      <path
+        d="M0 684 L60 672 L120 678 L180 655 L240 662 L300 642 L360 650 L420 628 L480 637 L540 612 L600 620 L660 592 L690 597"
+        stroke="#3aa3ff"
+        stroke-width="4"
+        stroke-linejoin="round"
+        stroke-linecap="round"
+      />
+      <circle cx="690" cy="597" r="8" fill="#3aa3ff" />
+      <circle cx="690" cy="597" r="16" fill="#3aa3ff" opacity="0.18" />
+    </svg>
+    <img class="watch" src="../docs/store-cover.png" alt="" />
+    <div class="content">
+      <div class="eyebrow">GARMIN CONNECT IQ &middot; WIDGET</div>
+      <div class="title">
+        ONE<br />TICKER<br />STOCK<span class="dim">_</span>
+      </div>
+      <div class="tagline">
+        <b>One ticker. One glance.</b> Live price and intraday chart on your
+        watch.
+      </div>
+      <div class="tickers">
+        <div class="chip">AAPL <span class="down">-0.28%</span></div>
+        <div class="chip">BTC-USD <span class="up">+1.4%</span></div>
+        <div class="chip">^NDX</div>
+        <div class="chip">XTB.WA</div>
+      </div>
+    </div>
+  </body>
+</html>

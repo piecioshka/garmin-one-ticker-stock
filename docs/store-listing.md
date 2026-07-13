@@ -64,6 +64,8 @@ Initial release.
 
 ## Grafiki
 
+- Hero Image (1440×720, opcjonalny): `docs/store-hero.png` (źródło:
+  `docs/store-hero.html`, render przez headless Chromium 1440×720)
 - Cover Image (500×500, wymagany): `docs/store-cover.png`
 - Screenshoty (min. 1, każdy < 150 kB): `docs/screenshots/apple.png`,
   `bitcoin.png`, `brent.png`, `nasdaq100.png`, `xtb.png`
