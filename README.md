@@ -1,8 +1,13 @@
 # garmin-one-ticker-stock ⌚📈
 
+[![Connect IQ Store](https://img.shields.io/badge/Connect_IQ_Store-One_Ticker_Stock-007CC3?logo=garmin)](https://apps.garmin.com/en-US/apps/f4445669-50fa-4d35-a988-ee1a65721bfb)
+
 📊 Connect IQ widget for the Garmin Forerunner 945 that shows the current
 price and an intraday chart of any stock ticker you configure in the app
 settings.
+
+Available as **One Ticker Stock** in the official
+[Connect IQ Store](https://apps.garmin.com/en-US/apps/f4445669-50fa-4d35-a988-ee1a65721bfb).
 
 ## Screenshots 📸
 
@@ -84,7 +89,14 @@ monkeyc -f monkey.jungle -d fr945 -o bin/garmin-one-ticker-stock-test.prg \
 Change the ticker in the simulator via _File → Edit Application →
 App Settings_.
 
-## Install on the watch ⌚
+## Install from the Connect IQ Store 🏪
+
+Install [One Ticker Stock](https://apps.garmin.com/en-US/apps/f4445669-50fa-4d35-a988-ee1a65721bfb)
+from the Connect IQ Store (via Garmin Connect Mobile or the Connect IQ app).
+This is the recommended way — app settings (ticker, chart window, chart
+type) are then editable from the phone.
+
+## Install manually (sideload) ⌚
 
 Connect the watch over USB and copy the app:
 
