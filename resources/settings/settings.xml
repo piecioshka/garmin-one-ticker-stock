@@ -1,0 +1,5 @@
+<settings>
+    <setting propertyKey="@Properties.ticker" title="@Strings.TickerTitle">
+        <settingConfig type="alphaNumeric" maxLength="12"/>
+    </setting>
+</settings>

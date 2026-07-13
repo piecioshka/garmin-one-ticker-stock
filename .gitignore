@@ -1,0 +1,12 @@
+# Session temp files
+tmp/*
+!tmp/.gitkeep
+
+# Connect IQ build output
+bin/
+*.prg
+*.prg.debug.xml
+
+# Developer key — never commit
+*.der
+*.key
