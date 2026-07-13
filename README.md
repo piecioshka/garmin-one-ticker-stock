@@ -13,17 +13,17 @@ settings.
 
 ## Features 🚀
 
-- Current price with change vs. previous close (green/red)
-- Intraday line chart (1 day, 15-minute interval); when Yahoo has no
+- 💰 Current price with change vs. previous close (green/red)
+- 📈 Intraday line chart (1 day, 15-minute interval); when Yahoo has no
   candles for the current UTC day yet (typical for crypto), the widget
   falls back to a 2-day window
-- Instrument name and session status (opens/closes/closed) in the
+- 🕒 Instrument name and session status (opens/closes/closed) in the
   watch-local time
-- Any instrument known to Yahoo Finance: stocks (`AAPL`), crypto
+- 🌍 Any instrument known to Yahoo Finance: stocks (`AAPL`), crypto
   (`BTC-USD`), indices (`^NDX`), futures (`BZ=F`), GPW tickers (`XTB.WA`)
-- Last successful quote cached on the watch — the widget always shows data
-  instantly and refreshes in the background
-- Error states for no phone connection and unknown tickers
+- 💾 Last successful quote cached on the watch — the widget always shows
+  data instantly and refreshes in the background
+- 🚨 Error states for no phone connection and unknown tickers
 
 ## Data source 🌐
 
