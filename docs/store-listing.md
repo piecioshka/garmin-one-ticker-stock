@@ -64,6 +64,7 @@ Initial release.
 
 ## Grafiki
 
-- Screenshoty (min. 1): `docs/screenshots/apple.png`, `bitcoin.png`,
-  `brent.png`, `nasdaq100.png`, `xtb.png`
+- Cover Image (500×500, wymagany): `docs/store-cover.png`
+- Screenshoty (min. 1, każdy < 150 kB): `docs/screenshots/apple.png`,
+  `bitcoin.png`, `brent.png`, `nasdaq100.png`, `xtb.png`
 - Ikona aplikacji jest w paczce `.iq` (launcher icon z zasobów)
