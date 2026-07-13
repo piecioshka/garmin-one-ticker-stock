@@ -1,4 +1,4 @@
-# garmin-stocks ⌚📈
+# garmin-one-ticker-stock ⌚📈
 
 📊 Connect IQ widget for the Garmin Forerunner 945 that shows the current
 price and an intraday chart of any stock ticker you configure in the app
@@ -53,7 +53,7 @@ watch must be paired and the phone online.
 
 ```sh
 monkeyc -f monkey.jungle -d fr945 \
-  -o bin/garmin-stocks.prg \
+  -o bin/garmin-one-ticker-stock.prg \
   -y "$HOME/Library/Application Support/Garmin/ConnectIQ/developer_key.der" -w
 ```
 
@@ -66,15 +66,15 @@ Start the simulator first, then:
 SDK="$(cat "$HOME/Library/Application Support/Garmin/ConnectIQ/current-sdk.cfg")"
 open -a "$SDK/bin/ConnectIQ.app"
 
-monkeyc -f monkey.jungle -d fr945 -o bin/garmin-stocks-test.prg \
+monkeyc -f monkey.jungle -d fr945 -o bin/garmin-one-ticker-stock-test.prg \
   -y "$HOME/Library/Application Support/Garmin/ConnectIQ/developer_key.der" --unit-test
-"$SDK/bin/monkeydo" bin/garmin-stocks-test.prg fr945 -t
+"$SDK/bin/monkeydo" bin/garmin-one-ticker-stock-test.prg fr945 -t
 ```
 
 ## Run in the simulator ▶️
 
 ```sh
-"$SDK/bin/monkeydo" bin/garmin-stocks.prg fr945
+"$SDK/bin/monkeydo" bin/garmin-one-ticker-stock.prg fr945
 ```
 
 Change the ticker in the simulator via _File → Edit Application →
@@ -85,7 +85,7 @@ App Settings_.
 Connect the watch over USB and copy the app:
 
 ```sh
-cp bin/garmin-stocks.prg /Volumes/GARMIN/GARMIN/APPS/
+cp bin/garmin-one-ticker-stock.prg /Volumes/GARMIN/GARMIN/APPS/
 ```
 
 The widget appears in the widget carousel (UP/DOWN buttons from the watch
