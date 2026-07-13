@@ -15,10 +15,10 @@ class StocksView extends Ui.View {
     const PRICE_Y = 48;
     const CHANGE_Y = 94;
     const CHART_X = 30;
-    const CHART_Y = 126;
+    const CHART_Y = 134;
     const CHART_WIDTH = 180;
-    const CHART_HEIGHT = 66;
-    const CHART_MESSAGE_Y = 150;
+    const CHART_HEIGHT = 60;
+    const CHART_MESSAGE_Y = 152;
     const FOOTER_Y = 202;
 
     // Dark orange; an exact color of the FR945 RGB222 palette, so the MIP
