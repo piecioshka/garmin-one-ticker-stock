@@ -1,7 +1,7 @@
 # Connect IQ Store listing 🏪
 
-Materiały do wklejenia w formularzu Developer Dashboard
-(https://apps.garmin.com/developer/dashboard) przy publikacji aplikacji.
+Copy-paste materials for the Developer Dashboard form
+(https://apps.garmin.com/developer/dashboard) used when publishing the app.
 
 ## App name
 
@@ -49,13 +49,13 @@ affiliated with Yahoo. Data may be delayed — do not use it as the sole
 basis for trading decisions.
 ```
 
-## What's new (wersja 1.0.0)
+## What's new (version 1.0.0)
 
 ```
 Initial release.
 ```
 
-## What's new (wersja 1.1.0)
+## What's new (version 1.1.0)
 
 ```
 - New setting: chart window — last 24 hours (default), last 48 hours, or
@@ -70,23 +70,23 @@ Initial release.
   top, giving the chart more breathing room.
 ```
 
-## Metadane formularza
+## Form metadata
 
-| Pole                  | Wartość                                                      |
-| --------------------- | ------------------------------------------------------------ |
-| Type                  | Widget                                                       |
-| Category              | Finance (jeśli brak — Lifestyle)                             |
-| Supported devices     | Forerunner 945 (wynika z manifestu w `.iq`)                  |
-| Permissions           | Communications — pobieranie notowań przez telefon            |
-| Source code URL       | https://github.com/piecioshka/garmin-one-ticker-stock        |
-| Privacy: dane osobowe | Aplikacja nie zbiera ani nie wysyła żadnych danych osobowych |
+| Field                  | Value                                                   |
+| ---------------------- | ------------------------------------------------------- |
+| Type                   | Widget                                                  |
+| Category               | Finance (fall back to Lifestyle if absent)              |
+| Supported devices      | Forerunner 945 (derived from the manifest in the `.iq`) |
+| Permissions            | Communications — fetching quotes through the phone      |
+| Source code URL        | https://github.com/piecioshka/garmin-one-ticker-stock   |
+| Privacy: personal data | The app does not collect or send any personal data      |
 
-## Grafiki
+## Artwork
 
-- Hero Image (1440×720, opcjonalny): `docs/store-hero.png` (źródło:
-  `docs/store-hero.html`, render przez headless Chromium 1440×720)
-- Cover Image (500×500, wymagany): `docs/store-cover.png`
-- Screenshoty (min. 1, każdy < 150 kB): `docs/screenshots/apple.png`
-  (z przerywaną linią przerwy między sesjami), `bitcoin.png`, `brent.png`
-  (tryb świecowy), `nasdaq100.png` (tryb świecowy), `xtb.png`
-- Ikona aplikacji jest w paczce `.iq` (launcher icon z zasobów)
+- Hero Image (1440×720, optional): `docs/store-hero.png` (source:
+  `docs/store-hero.html`, rendered with headless Chromium at 1440×720)
+- Cover Image (500×500, required): `docs/store-cover.png`
+- Screenshots (at least 1, each < 150 kB): `docs/screenshots/apple.png`
+  (with the dashed session-break line), `bitcoin.png`, `brent.png`
+  (candlestick mode), `nasdaq100.png` (candlestick mode), `xtb.png`
+- The app icon ships inside the `.iq` package (launcher icon from resources)
