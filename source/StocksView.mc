@@ -8,7 +8,11 @@ using Toybox.Time.Gregorian;
 
 class StocksView extends Ui.View {
 
-    // Vertical layout of the 240x240 round MIP face, top to bottom.
+    // Layout designed on the 240x240 round FR945 face, top to bottom.
+    // Every coordinate is scaled to the actual screen size at draw time
+    // (scaleX/scaleY), so the same proportions hold on 218px vivoactive 4S
+    // and 454px venu 3 alike.
+    const DESIGN_SIZE = 240;
     const SYMBOL_Y = 10;
     const NAME_Y = 34;
     const NAME_MAX_WIDTH = 180;
@@ -18,8 +22,15 @@ class StocksView extends Ui.View {
     const CHART_Y = 134;
     const CHART_WIDTH = 180;
     const CHART_HEIGHT = 60;
-    const CHART_MESSAGE_Y = 152;
     const FOOTER_Y = 202;
+
+    function scaleX(dc, value) {
+        return value * dc.getWidth() / DESIGN_SIZE;
+    }
+
+    function scaleY(dc, value) {
+        return value * dc.getHeight() / DESIGN_SIZE;
+    }
 
     // Dark orange; an exact color of the FR945 RGB222 palette, so the MIP
     // display renders it without quantization.
@@ -124,20 +135,36 @@ class StocksView extends Ui.View {
         var cx = dc.getWidth() / 2;
 
         dc.setColor(Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT);
-        dc.drawText(cx, SYMBOL_Y, Gfx.FONT_SMALL, mData.get("symbol"),
+        dc.drawText(cx, scaleY(dc, SYMBOL_Y), Gfx.FONT_SMALL, mData.get("symbol"),
             Gfx.TEXT_JUSTIFY_CENTER);
-        var name = nameLabel(dc, NAME_MAX_WIDTH);
+        var name = nameLabel(dc, scaleX(dc, NAME_MAX_WIDTH));
         if (name != null) {
-            dc.drawText(cx, NAME_Y, Gfx.FONT_XTINY, name, Gfx.TEXT_JUSTIFY_CENTER);
+            dc.drawText(cx, scaleY(dc, NAME_Y), Gfx.FONT_XTINY, name,
+                Gfx.TEXT_JUSTIFY_CENTER);
         }
 
+        var priceY = scaleY(dc, PRICE_Y);
         dc.setColor(Gfx.COLOR_WHITE, Gfx.COLOR_TRANSPARENT);
-        dc.drawText(cx, PRICE_Y, Gfx.FONT_NUMBER_MEDIUM,
+        dc.drawText(cx, priceY, Gfx.FONT_NUMBER_MEDIUM,
             formatPrice(mData.get("price")), Gfx.TEXT_JUSTIFY_CENTER);
 
-        drawChange(dc, cx);
-        drawChart(dc);
+        // Some devices (e.g. venu 4) render number fonts taller than the
+        // scaled design assumes, so the rows below the price are pushed
+        // down when its digits would collide with them; the chart absorbs
+        // the shift by keeping its bottom edge in place.
+        var changeY = maxOf(scaleY(dc, CHANGE_Y),
+            priceY + Gfx.getFontAscent(Gfx.FONT_NUMBER_MEDIUM));
+        var chartY = maxOf(scaleY(dc, CHART_Y),
+            changeY + Gfx.getFontAscent(Gfx.FONT_SMALL) + scaleY(dc, 8));
+        var chartHeight = scaleY(dc, CHART_Y + CHART_HEIGHT) - chartY;
+
+        drawChange(dc, cx, changeY);
+        drawChart(dc, chartY, chartHeight);
         drawFooter(dc, cx);
+    }
+
+    function maxOf(a, b) {
+        return a > b ? a : b;
     }
 
     // Instrument name truncated to maxWidth pixels so the line fits the
@@ -157,7 +184,7 @@ class StocksView extends Ui.View {
         return name + "...";
     }
 
-    function drawChange(dc, cx) {
+    function drawChange(dc, cx, changeY) {
         var price = mData.get("price");
         var prevClose = mData.get("prevClose");
         if (prevClose == null || prevClose.toFloat() == 0.0) {
@@ -168,7 +195,7 @@ class StocksView extends Ui.View {
         var color = change >= 0 ? Gfx.COLOR_GREEN : Gfx.COLOR_RED;
         var sign = change >= 0 ? "+" : "";
         dc.setColor(color, Gfx.COLOR_TRANSPARENT);
-        dc.drawText(cx, CHANGE_Y, Gfx.FONT_SMALL,
+        dc.drawText(cx, changeY, Gfx.FONT_SMALL,
             sign + change.format("%.2f") + " (" + sign + pct.format("%.2f") + "%)",
             Gfx.TEXT_JUSTIFY_CENTER);
     }
@@ -177,35 +204,36 @@ class StocksView extends Ui.View {
     const CHART_TYPE_LINE = 0;
     const CHART_TYPE_CANDLES = 1;
 
-    function drawChart(dc) {
+    function drawChart(dc, chartY, chartHeight) {
         if (numberProperty("chartType", CHART_TYPE_LINE) == CHART_TYPE_CANDLES
-            && drawCandleChart(dc)) {
+            && drawCandleChart(dc, chartY, chartHeight)) {
             return;
         }
-        var points = ChartRenderer.scalePoints(mData.get("closes"), CHART_X, CHART_Y, CHART_WIDTH, CHART_HEIGHT);
+        var points = ChartRenderer.scalePoints(mData.get("closes"),
+            scaleX(dc, CHART_X), chartY, scaleX(dc, CHART_WIDTH), chartHeight);
         if (points.size() < 2) {
             dc.setColor(Gfx.COLOR_DK_GRAY, Gfx.COLOR_TRANSPARENT);
-            dc.drawText(dc.getWidth() / 2, CHART_MESSAGE_Y, Gfx.FONT_XTINY,
-                "No chart data", Gfx.TEXT_JUSTIFY_CENTER);
+            dc.drawText(dc.getWidth() / 2, chartY + chartHeight / 2,
+                Gfx.FONT_XTINY, "No chart data", Gfx.TEXT_JUSTIFY_CENTER);
             return;
         }
         // "breaks" is absent in quotes cached by older versions
         ChartRenderer.drawBreaks(dc, points, mData.get("breaks"),
-            CHART_Y, CHART_HEIGHT, Gfx.COLOR_DK_GRAY);
+            chartY, chartHeight, Gfx.COLOR_DK_GRAY);
         ChartRenderer.draw(dc, points, Gfx.COLOR_BLUE);
     }
 
     // False when OHLC series are unavailable (e.g. a quote cached by an
     // older version) — the caller then falls back to the line chart.
-    function drawCandleChart(dc) {
+    function drawCandleChart(dc, chartY, chartHeight) {
         var candles = ChartRenderer.scaleCandles(mData.get("opens"),
             mData.get("highs"), mData.get("lows"), mData.get("closes"),
-            CHART_X, CHART_Y, CHART_WIDTH, CHART_HEIGHT);
+            scaleX(dc, CHART_X), chartY, scaleX(dc, CHART_WIDTH), chartHeight);
         if (candles.size() < 2) {
             return false;
         }
         ChartRenderer.drawBreaks(dc, candles, mData.get("breaks"),
-            CHART_Y, CHART_HEIGHT, Gfx.COLOR_DK_GRAY);
+            chartY, chartHeight, Gfx.COLOR_DK_GRAY);
         ChartRenderer.drawCandles(dc, candles, Gfx.COLOR_GREEN, Gfx.COLOR_RED);
         return true;
     }
@@ -213,25 +241,26 @@ class StocksView extends Ui.View {
     // Update time in gray plus the session status in dark orange,
     // e.g. "10:31 | Closes 22:00", centered as a whole.
     function drawFooter(dc, cx) {
+        var footerY = scaleY(dc, FOOTER_Y);
         if (mError != null) {
             dc.setColor(Gfx.COLOR_RED, Gfx.COLOR_TRANSPARENT);
-            dc.drawText(cx, FOOTER_Y, Gfx.FONT_XTINY, mError, Gfx.TEXT_JUSTIFY_CENTER);
+            dc.drawText(cx, footerY, Gfx.FONT_XTINY, mError, Gfx.TEXT_JUSTIFY_CENTER);
             return;
         }
         var updated = updatedLabel();
         var session = sessionLabel();
         if (session == null) {
             dc.setColor(Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT);
-            dc.drawText(cx, FOOTER_Y, Gfx.FONT_XTINY, updated, Gfx.TEXT_JUSTIFY_CENTER);
+            dc.drawText(cx, footerY, Gfx.FONT_XTINY, updated, Gfx.TEXT_JUSTIFY_CENTER);
             return;
         }
         var lead = updated.length() > 0 ? updated + " | " : "";
         var leadWidth = dc.getTextWidthInPixels(lead, Gfx.FONT_XTINY);
         var x = cx - (leadWidth + dc.getTextWidthInPixels(session, Gfx.FONT_XTINY)) / 2;
         dc.setColor(Gfx.COLOR_LT_GRAY, Gfx.COLOR_TRANSPARENT);
-        dc.drawText(x, FOOTER_Y, Gfx.FONT_XTINY, lead, Gfx.TEXT_JUSTIFY_LEFT);
+        dc.drawText(x, footerY, Gfx.FONT_XTINY, lead, Gfx.TEXT_JUSTIFY_LEFT);
         dc.setColor(SESSION_COLOR, Gfx.COLOR_TRANSPARENT);
-        dc.drawText(x + leadWidth, FOOTER_Y, Gfx.FONT_XTINY, session, Gfx.TEXT_JUSTIFY_LEFT);
+        dc.drawText(x + leadWidth, footerY, Gfx.FONT_XTINY, session, Gfx.TEXT_JUSTIFY_LEFT);
     }
 
     function sessionLabel() {

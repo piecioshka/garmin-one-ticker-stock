@@ -7,7 +7,24 @@
         launcherIcon="@Drawables.LauncherIcon"
         minApiLevel="3.1.0">
         <iq:products>
+            <!-- fenix7x covers tactix 7; epix2pro51mm covers tactix 7 AMOLED -->
+            <iq:product id="epix2pro51mm"/>
+            <iq:product id="fenix7x"/>
             <iq:product id="fr945"/>
+            <iq:product id="venu2"/>
+            <iq:product id="venu2plus"/>
+            <iq:product id="venu2s"/>
+            <iq:product id="venu3"/>
+            <iq:product id="venu3s"/>
+            <iq:product id="venu441mm"/>
+            <iq:product id="venu445mm"/>
+            <iq:product id="vivoactive3"/>
+            <iq:product id="vivoactive3m"/>
+            <iq:product id="vivoactive3mlte"/>
+            <iq:product id="vivoactive4"/>
+            <iq:product id="vivoactive4s"/>
+            <iq:product id="vivoactive5"/>
+            <iq:product id="vivoactive6"/>
         </iq:products>
         <iq:permissions>
             <iq:uses-permission id="Communications"/>
