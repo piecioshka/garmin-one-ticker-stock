@@ -68,9 +68,12 @@ version.
 
 ## Artwork
 
-- Hero Image (1440×720, optional): `docs/store-hero.png` (source:
-  `docs/store-hero.html`, rendered with headless Chromium at 1440×720)
-- Cover Image (500×500, required): `docs/store-cover.png`
+- Hero Image (1440×720, optional): `docs/store-hero.png` — tactix 7 with a
+  line chart (`docs/store-hero-tactix.png`) next to Venu 3 with candles
+  (`docs/screenshots/nasdaq100.png`); source: `docs/store-hero.html`,
+  rendered with headless Chromium at 1440×720
+- Cover Image (500×500, required): `docs/store-cover.png` — Venu 3 face
+  with NQ=F candles
 - Screenshots (at least 1, each < 150 kB), each taken on a different watch
   model: `docs/screenshots/apple.png` (Forerunner 945), `bitcoin.png`
   (epix Pro Gen 2), `brent.png` (tactix 7, candlestick mode),
