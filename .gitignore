@@ -1,5 +1,4 @@
 # Session temp files
-tmp/*
 tmp/
 
 # Connect IQ build output
