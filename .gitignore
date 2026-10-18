@@ -1,6 +1,6 @@
 # Session temp files
 tmp/*
-!tmp/.gitkeep
+tmp/
 
 # Connect IQ build output
 bin/
